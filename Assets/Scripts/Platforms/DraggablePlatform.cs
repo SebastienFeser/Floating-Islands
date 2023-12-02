@@ -38,11 +38,11 @@ public class DraggablePlatform : MonoBehaviour
     {
         if(isActive)
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z - 45f);
             }
-            else if (Input.GetKeyDown(KeyCode.E))
+            else if (Input.GetKeyDown(KeyCode.Q))
             {
                 transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z + 45f);
             }
