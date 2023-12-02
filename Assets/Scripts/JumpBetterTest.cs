@@ -9,12 +9,15 @@ public class JumpBetterTest : MonoBehaviour
     private float jumpingPower = 16f;
     private bool isFacingRight = true;
     private bool isWallSliding;
-    private float wallSlidingSpeed = 2f;private bool isWallJumping;
+    private float wallSlidingSpeed = 2f;
+    private bool isWallJumping;
     private float wallJumpingDirection;
     private float wallJumpingTime = 0.2f;
     private float wallJumpingCounter;
     private float wallJumpingDuration = 0.4f;
     private Vector2 wallJumpingPower = new Vector2(8f, 16f);
+
+    [SerializeField] private Animator anim;
 
     Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -41,6 +44,15 @@ public class JumpBetterTest : MonoBehaviour
         if(gameManager.gameState == GameManager.GameState.PLAY_MODE)
         {
             horizontal = Input.GetAxisRaw("Horizontal");
+
+            if (horizontal == 0)
+            {
+                anim.SetBool("IsRunning", false);
+            }
+            else
+            {
+                anim.SetBool("IsRunning", true);
+            }
 
             if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
             {
