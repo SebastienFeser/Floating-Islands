@@ -242,4 +242,4 @@ MonoBehaviour:
   wallCheck: {fileID: 3193523468364837499}
   wallLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 192
