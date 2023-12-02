@@ -37,4 +37,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void ResetPlayerPosition()
+    {
+        jumpBetterTest.ResetStartPosition();
+    }
+
 }
