@@ -7,10 +7,12 @@ public class DraggablePlatform : MonoBehaviour
     Vector3 mousePositionOffset;
     bool isActive;
     PlatformsManager platformsManager;
+    GameManager gameManager;
 
     private void Start()
     {
         platformsManager = GetComponentInParent<PlatformsManager>();
+        gameManager = FindObjectOfType<GameManager>();
     }
     private Vector3 GetMouseWorldPosition()
     {
@@ -19,19 +21,31 @@ public class DraggablePlatform : MonoBehaviour
 
     private void OnMouseDown()
     {
-        platformsManager.DeactivateAllSelectedPlatforms();
-        isActive = true;
-        mousePositionOffset = gameObject.transform.position - GetMouseWorldPosition();
+        if (gameManager.gameState == GameManager.GameState.BUILD_MODE)
+        {
+            platformsManager.DeactivateAllSelectedPlatforms();
+            isActive = true;
+            mousePositionOffset = gameObject.transform.position - GetMouseWorldPosition();
+
+        }
     }
 
     private void OnMouseDrag()
     {
-        transform.position = GetMouseWorldPosition() + mousePositionOffset;
+        if (gameManager.gameState == GameManager.GameState.BUILD_MODE)
+        {
+
+            transform.position = GetMouseWorldPosition() + mousePositionOffset;
+        }
     }
 
     private void Update()
     {
-        TurnGameObject();
+        if (gameManager.gameState == GameManager.GameState.BUILD_MODE)
+        {
+
+            TurnGameObject();
+        }
     }
 
     private void TurnGameObject()
