@@ -21,7 +21,7 @@ public class JumpTestScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && rb.velocity.y == 0)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             rb.velocity = Vector2.up * jumpVelocity;
         }
