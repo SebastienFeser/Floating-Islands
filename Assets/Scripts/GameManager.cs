@@ -15,10 +15,12 @@ public class GameManager : MonoBehaviour
     public GameState gameState;
 
     [SerializeField] TextMeshProUGUI buttonSwitchModeText;
+    JumpBetterTest jumpBetterTest;
 
     private void Start()
     {
         gameState = GameState.BUILD_MODE;
+        jumpBetterTest = FindObjectOfType<JumpBetterTest>();
     }
     public void ChangeGameMode()
     {
@@ -31,6 +33,7 @@ public class GameManager : MonoBehaviour
         {
             gameState = GameState.BUILD_MODE;
             buttonSwitchModeText.text = "Play Mode";
+            jumpBetterTest.ResetStartPosition();
         }
     }
 

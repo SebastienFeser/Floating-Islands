@@ -22,39 +22,55 @@ public class JumpBetterTest : MonoBehaviour
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
 
+    Vector3 startPosition;
+
+    GameManager gameManager;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        gameManager = FindObjectOfType<GameManager>();
+    }
+
+    private void Start()
+    {
+        startPosition = transform.position;
     }
 
     void Update()
     {
-        horizontal = Input.GetAxisRaw("Horizontal");
-
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+        if(gameManager.gameState == GameManager.GameState.PLAY_MODE)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
-        }
+            horizontal = Input.GetAxisRaw("Horizontal");
 
-        if (Input.GetKeyUp(KeyCode.Space) && rb.velocity.y > 0f)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-        }
+            if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            }
 
-        WallSlide();
-        WallJump();
+            if (Input.GetKeyUp(KeyCode.Space) && rb.velocity.y > 0f)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+            }
 
-        if (!isWallJumping)
-        {
-            Flip();
+            WallSlide();
+            WallJump();
+
+            if (!isWallJumping)
+            {
+                Flip();
+            }
         }
+        
     }
 
     private void FixedUpdate()
     {
-        if (!isWallJumping)
+        if (gameManager.gameState == GameManager.GameState.PLAY_MODE)
         {
-            rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+            if (!isWallJumping)
+            {
+                rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+            }
         }
     }
 
@@ -129,5 +145,10 @@ public class JumpBetterTest : MonoBehaviour
             localScale.x *= -1f;
             transform.localScale = localScale;
         }
+    }
+
+    public void ResetStartPosition()
+    {
+        transform.position = startPosition;
     }
 }
