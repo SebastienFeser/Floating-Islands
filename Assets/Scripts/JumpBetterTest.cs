@@ -25,6 +25,9 @@ public class JumpBetterTest : MonoBehaviour
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private float jumpDelay;
+    [SerializeField] private AudioClip jumpClip;
+    [SerializeField] private AudioClip jumpLandClip;
+    AudioSource playerSource;
     float timeLastGrounded;
     bool hasCheckedGrounded;
     bool hasJumped;
@@ -41,6 +44,7 @@ public class JumpBetterTest : MonoBehaviour
     private void Start()
     {
         startPosition = transform.position;
+        playerSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -60,6 +64,8 @@ public class JumpBetterTest : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space) && (IsGrounded() || Time.time - timeLastGrounded < jumpDelay) && !hasJumped)
             {
+                playerSource.clip = jumpClip;
+                playerSource.Play();
                 rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
                 hasJumped = true;
             }
@@ -84,6 +90,8 @@ public class JumpBetterTest : MonoBehaviour
             }
             else if (IsGrounded() && hasCheckedGrounded)
             {
+                playerSource.clip = jumpLandClip;
+                playerSource.Play();
                 hasCheckedGrounded = false;
                 hasJumped = false;
             }

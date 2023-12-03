@@ -6,9 +6,11 @@ using UnityEngine;
 public class Spikes : MonoBehaviour
 {
     GameManager gameManager;
+    AudioSource audioSource;
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
+        audioSource = GetComponent<AudioSource>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -17,6 +19,7 @@ public class Spikes : MonoBehaviour
         if (collision.tag == "Player")
         {
             gameManager.ResetPlayerPosition();
+            audioSource.Play();
         }
     }
 }
