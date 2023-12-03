@@ -24,6 +24,10 @@ public class JumpBetterTest : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
+    [SerializeField] private float jumpDelay;
+    float timeLastGrounded;
+    bool hasCheckedGrounded;
+    bool hasJumped;
 
     Vector3 startPosition;
 
@@ -54,9 +58,10 @@ public class JumpBetterTest : MonoBehaviour
                 anim.SetBool("IsRunning", true);
             }
 
-            if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+            if (Input.GetKeyDown(KeyCode.Space) && (IsGrounded() || Time.time - timeLastGrounded < jumpDelay) && !hasJumped)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+                hasJumped = true;
             }
 
             if (Input.GetKeyUp(KeyCode.Space) && rb.velocity.y > 0f)
@@ -71,6 +76,18 @@ public class JumpBetterTest : MonoBehaviour
             {
                 Flip();
             }
+
+            if(!IsGrounded() && !hasCheckedGrounded)
+            {
+                timeLastGrounded = Time.time;
+                hasCheckedGrounded = true;
+            }
+            else if (IsGrounded() && hasCheckedGrounded)
+            {
+                hasCheckedGrounded = false;
+                hasJumped = false;
+            }
+
         }
         
     }
